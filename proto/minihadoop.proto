@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package minihadoop;
+
+option go_package = "github.com/madhavv-xd/minihadoop/proto;proto";
+
+//service 1 -> which is the namenode service
+service NameNode{
+    rpc Register(RegisterRequest) returns (RegisterResponse);
+    rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+} //generator turns this into a golang interface 
+
+//register messages 
+message RegisterRequest{
+    string address=1;
+    int64 capacity_bytes=2;  
+} //datanode sends its address and capacity
+
+message RegisterResponse{
+    string node_id = 1;
+} //message is like a go struct  , namenode replies with node id
+
+message HeartbeatRequest {
+  string node_id = 1;
+  int64 used_bytes = 2;
+  int32 free_slots = 3;
+}
+
+message HeartbeatResponse {
+  repeated Command commands = 1;
+}
+
+//commmands 
+enum CommandType {
+  COMMAND_UNSPECIFIED = 0;
+  DELETE_BLOCKS = 1;
+  REPLICATE_BLOCK = 2;
+}
+
+message Command {
+  CommandType type = 1;
+  repeated string block_ids = 2;
+  string target_address = 3;
+}
+
+service DataNode {
+  rpc StoreBlock(StoreBlockRequest) returns (StoreBlockResponse);
+  rpc ReadBlock(ReadBlockRequest) returns (ReadBlockResponse);
+  rpc ReplicateBlock(ReplicateBlockRequest) returns (ReplicateBlockResponse);
+  rpc RunTask(RunTaskRequest) returns (RunTaskResponse);
+}
+
+message StoreBlockRequest {
+  string block_id = 1;
+  bytes data = 2;
+  uint32 checksum = 3;              // CRC32 of data
+  repeated string pipeline = 4;     // next DataNodes to forward to (write pipeline)
+}
+
+message StoreBlockResponse {
+  bool ok = 1;
+}
+
+message ReadBlockRequest {
+  string block_id = 1;
+}
+
+message ReadBlockResponse {
+  bytes data = 1;
+  uint32 checksum = 2;
+}
+
+message ReplicateBlockRequest {
+  string block_id = 1;
+  string target_address = 2;
+}
+
+message ReplicateBlockResponse {
+  bool ok = 1;
+}
+
+message RunTaskRequest {
+  string job_id = 1;
+  string task_id = 2;
+  string block_id = 3;
+  string task_type = 4;   // e.g. "embed"
+}
+
+message RunTaskResponse {
+  bool accepted = 1;
+}
