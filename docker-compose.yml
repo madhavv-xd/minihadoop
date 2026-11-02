@@ -1,0 +1,33 @@
+services:
+  namenode:
+    build: .
+    command: namenode
+    ports:
+      - "9000:9000"
+
+  datanode1:
+    build: .
+    command: datanode
+    environment:
+      NAMENODE_ADDR: namenode:9000
+      SELF_ADDR: datanode1:9001
+      PORT: "9001"
+    depends_on: [namenode]
+
+  datanode2:
+    build: .
+    command: datanode
+    environment:
+      NAMENODE_ADDR: namenode:9000
+      SELF_ADDR: datanode2:9001
+      PORT: "9001"
+    depends_on: [namenode]
+
+  datanode3:
+    build: .
+    command: datanode
+    environment:
+      NAMENODE_ADDR: namenode:9000
+      SELF_ADDR: datanode3:9001
+      PORT: "9001"
+    depends_on: [namenode]
