@@ -3,6 +3,7 @@ package datanode
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	pb "github.com/madhavv-xd/minihadoop/proto"
@@ -18,18 +19,23 @@ type DataNode struct {
 	selfAddr string //address others use to reach this node 
 	client pb.NameNodeClient //used to call namenode 
 	nodeID string 
+	dataDir string //where blocks are stored 
 }
 
-func New(nameNodeAddr , selfAddr string) (*DataNode , error){
-	conn , err := grpc.NewClient(nameNodeAddr , 
-	grpc.WithTransportCredentials(insecure.NewCredentials()))
+func New(nameNodeAddr, selfAddr, dataDir string) (*DataNode, error) {
+	if err := os.MkdirAll(dataDir, 0o755); err != nil {
+		return nil, err
+	}
+	conn, err := grpc.NewClient(nameNodeAddr,
+		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return nil,err 
+		return nil, err
 	}
 	return &DataNode{
-		selfAddr : selfAddr,
-		client : pb.NewNameNodeClient(conn),
-	} , nil 
+		selfAddr: selfAddr,
+		client:   pb.NewNameNodeClient(conn),
+		dataDir:  dataDir,
+	}, nil
 } //new node making and linking it to the nameNode client 
 
 func(d *DataNode) register() {

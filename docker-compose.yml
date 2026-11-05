@@ -2,8 +2,7 @@ services:
   namenode:
     build: .
     command: namenode
-    ports:
-      - "9000:9000"
+    ports: ["9000:9000"]
 
   datanode1:
     build: .
@@ -12,6 +11,8 @@ services:
       NAMENODE_ADDR: namenode:9000
       SELF_ADDR: datanode1:9001
       PORT: "9001"
+      DATA_DIR: /data
+    volumes: ["dn1-data:/data"]
     depends_on: [namenode]
 
   datanode2:
@@ -21,6 +22,8 @@ services:
       NAMENODE_ADDR: namenode:9000
       SELF_ADDR: datanode2:9001
       PORT: "9001"
+      DATA_DIR: /data
+    volumes: ["dn2-data:/data"]
     depends_on: [namenode]
 
   datanode3:
@@ -30,4 +33,40 @@ services:
       NAMENODE_ADDR: namenode:9000
       SELF_ADDR: datanode3:9001
       PORT: "9001"
+      DATA_DIR: /data
+    volumes: ["dn3-data:/data"]
     depends_on: [namenode]
+  datanode4:
+    build: .
+    command: datanode
+    environment:
+      NAMENODE_ADDR: namenode:9000
+      SELF_ADDR: datanode4:9001
+      PORT: "9001"
+      DATA_DIR: /data
+    volumes: ["dn4-data:/data"]
+    depends_on: [namenode]
+
+  datanode5:
+    build: .
+    command: datanode
+    environment:
+      NAMENODE_ADDR: namenode:9000
+      SELF_ADDR: datanode5:9001
+      PORT: "9001"
+      DATA_DIR: /data
+    volumes: ["dn5-data:/data"]
+    depends_on: [namenode]
+  client:
+    build: .
+    entrypoint: ["client"]
+    environment:
+      NAMENODE_ADDR: namenode:9000
+    volumes: ["./testdata:/files"]
+    profiles: ["tools"]
+volumes:
+  dn1-data:
+  dn2-data:
+  dn3-data:
+  dn4-data:
+  dn5-data:

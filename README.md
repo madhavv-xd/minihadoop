@@ -1,24 +1,27 @@
 # minihadoop
 
-A small HDFS-style distributed file system written in Go, built to learn how Hadoop works under the hood. Nodes talk to each other over gRPC, and the contract lives in `proto/minihadoop.proto`.
+A small HDFS-style distributed file system written in Go, built to learn how Hadoop works under the hood. Nodes talk over gRPC; the contract lives in `proto/minihadoop.proto`.
 
 ## Architecture
 
-- **NameNode** (`:9000`): keeps the table of DataNodes. It handles `Register` and `Heartbeat` calls and every 5s logs which nodes are alive (a node counts as alive if it was seen in the last 10s).
-- **DataNode** (`:9001`): registers with the NameNode, retrying until that works, then sends a heartbeat every 3s. If the NameNode has forgotten it, the DataNode registers again. It also runs its own gRPC server for block operations.
+- **NameNode** (`:9000`): tracks DataNodes via `Register`/`Heartbeat` (alive = seen in the last 10s). Holds file → block → node metadata in memory and hands out 3 nodes per block (`AddBlock`). Files are write-once.
+- **DataNode** (`:9001`): registers and heartbeats every 3s. Stores blocks on disk under `DATA_DIR` with a CRC32 checksum, and forwards each write down the replication pipeline. Reads re-check the checksum.
+- **Client**: `put` splits a file into 1 MB blocks and sends each to the first node in its pipeline; `get` fetches the blocks back in order.
 
 ## Running
 
 ```sh
-docker compose up --build
+docker compose up --build                     # 1 NameNode + 5 DataNodes
+docker compose run --rm client put /files/test.bin test.bin
+docker compose run --rm client get test.bin /files/out.bin
 ```
 
-This starts one NameNode and three DataNodes. Watch the NameNode logs to see the nodes register and stay alive.
+The client runs in a container so it can reach the DataNodes by their compose hostnames. `./testdata` is mounted at `/files`.
 
-DataNode config comes from env vars: `NAMENODE_ADDR`, `SELF_ADDR` and `PORT`.
+DataNode env vars: `NAMENODE_ADDR`, `SELF_ADDR`, `PORT`, `DATA_DIR`.
 
 ## Status
 
-Working now: node registration and heartbeats (Day 1).
+Working: registration, heartbeats, block storage with checksums, 3-way replicated writes, reads.
 
-Defined in the proto but not built yet: block storage and reads with CRC32 checksums, the replication write pipeline, NameNode commands (delete/replicate blocks), and running tasks on DataNodes.
+Not built yet: re-replication when a node dies, NameNode commands (delete/replicate), running tasks on DataNodes.

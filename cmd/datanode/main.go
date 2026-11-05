@@ -15,9 +15,9 @@ func main(){
 	nameNodeAddr := getenv("NAMENODE_ADDR", "localhost:9000")
 	selfAddr := getenv("SELF_ADDR" ,"localhost:9001")
 	port := getenv("PORT" , "9001")
-
+	dataDir := getenv("DATA_DIR", "data")
 	//BUILD THE DATANODE 
-	dn , err := datanode.New(nameNodeAddr , selfAddr)
+	dn , err := datanode.New(nameNodeAddr , selfAddr ,dataDir)
 	if err != nil {
 		log.Fatalf("client: %v" , err) 
 	}

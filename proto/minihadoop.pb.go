@@ -332,19 +332,335 @@ func (x *Command) GetTargetAddress() string {
 	return ""
 }
 
+type AddBlockRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	File          string                 `protobuf:"bytes,1,opt,name=file,proto3" json:"file,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddBlockRequest) Reset() {
+	*x = AddBlockRequest{}
+	mi := &file_proto_minihadoop_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddBlockRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddBlockRequest) ProtoMessage() {}
+
+func (x *AddBlockRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_minihadoop_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddBlockRequest.ProtoReflect.Descriptor instead.
+func (*AddBlockRequest) Descriptor() ([]byte, []int) {
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *AddBlockRequest) GetFile() string {
+	if x != nil {
+		return x.File
+	}
+	return ""
+}
+
+type AddBlockResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BlockId       string                 `protobuf:"bytes,1,opt,name=block_id,json=blockId,proto3" json:"block_id,omitempty"`
+	Addresses     []string               `protobuf:"bytes,2,rep,name=addresses,proto3" json:"addresses,omitempty"` // first = node to write to, rest = pipeline
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddBlockResponse) Reset() {
+	*x = AddBlockResponse{}
+	mi := &file_proto_minihadoop_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddBlockResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddBlockResponse) ProtoMessage() {}
+
+func (x *AddBlockResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_minihadoop_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddBlockResponse.ProtoReflect.Descriptor instead.
+func (*AddBlockResponse) Descriptor() ([]byte, []int) {
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *AddBlockResponse) GetBlockId() string {
+	if x != nil {
+		return x.BlockId
+	}
+	return ""
+}
+
+func (x *AddBlockResponse) GetAddresses() []string {
+	if x != nil {
+		return x.Addresses
+	}
+	return nil
+}
+
+type CompleteFileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	File          string                 `protobuf:"bytes,1,opt,name=file,proto3" json:"file,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CompleteFileRequest) Reset() {
+	*x = CompleteFileRequest{}
+	mi := &file_proto_minihadoop_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompleteFileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompleteFileRequest) ProtoMessage() {}
+
+func (x *CompleteFileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_minihadoop_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompleteFileRequest.ProtoReflect.Descriptor instead.
+func (*CompleteFileRequest) Descriptor() ([]byte, []int) {
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *CompleteFileRequest) GetFile() string {
+	if x != nil {
+		return x.File
+	}
+	return ""
+}
+
+type CompleteFileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CompleteFileResponse) Reset() {
+	*x = CompleteFileResponse{}
+	mi := &file_proto_minihadoop_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompleteFileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompleteFileResponse) ProtoMessage() {}
+
+func (x *CompleteFileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_minihadoop_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompleteFileResponse.ProtoReflect.Descriptor instead.
+func (*CompleteFileResponse) Descriptor() ([]byte, []int) {
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{8}
+}
+
+type GetBlockLocationsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	File          string                 `protobuf:"bytes,1,opt,name=file,proto3" json:"file,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBlockLocationsRequest) Reset() {
+	*x = GetBlockLocationsRequest{}
+	mi := &file_proto_minihadoop_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBlockLocationsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBlockLocationsRequest) ProtoMessage() {}
+
+func (x *GetBlockLocationsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_minihadoop_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBlockLocationsRequest.ProtoReflect.Descriptor instead.
+func (*GetBlockLocationsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetBlockLocationsRequest) GetFile() string {
+	if x != nil {
+		return x.File
+	}
+	return ""
+}
+
+type BlockLocation struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BlockId       string                 `protobuf:"bytes,1,opt,name=block_id,json=blockId,proto3" json:"block_id,omitempty"`
+	Addresses     []string               `protobuf:"bytes,2,rep,name=addresses,proto3" json:"addresses,omitempty"` // every node holding this block
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BlockLocation) Reset() {
+	*x = BlockLocation{}
+	mi := &file_proto_minihadoop_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BlockLocation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BlockLocation) ProtoMessage() {}
+
+func (x *BlockLocation) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_minihadoop_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BlockLocation.ProtoReflect.Descriptor instead.
+func (*BlockLocation) Descriptor() ([]byte, []int) {
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *BlockLocation) GetBlockId() string {
+	if x != nil {
+		return x.BlockId
+	}
+	return ""
+}
+
+func (x *BlockLocation) GetAddresses() []string {
+	if x != nil {
+		return x.Addresses
+	}
+	return nil
+}
+
+type GetBlockLocationsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Blocks        []*BlockLocation       `protobuf:"bytes,1,rep,name=blocks,proto3" json:"blocks,omitempty"` // in file order
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBlockLocationsResponse) Reset() {
+	*x = GetBlockLocationsResponse{}
+	mi := &file_proto_minihadoop_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBlockLocationsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBlockLocationsResponse) ProtoMessage() {}
+
+func (x *GetBlockLocationsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_minihadoop_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBlockLocationsResponse.ProtoReflect.Descriptor instead.
+func (*GetBlockLocationsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetBlockLocationsResponse) GetBlocks() []*BlockLocation {
+	if x != nil {
+		return x.Blocks
+	}
+	return nil
+}
+
 type StoreBlockRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	BlockId       string                 `protobuf:"bytes,1,opt,name=block_id,json=blockId,proto3" json:"block_id,omitempty"`
 	Data          []byte                 `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	Checksum      uint32                 `protobuf:"varint,3,opt,name=checksum,proto3" json:"checksum,omitempty"` // CRC32 of data
-	Pipeline      []string               `protobuf:"bytes,4,rep,name=pipeline,proto3" json:"pipeline,omitempty"`  // next DataNodes to forward to (write pipeline)
+	Pipeline      []string               `protobuf:"bytes,4,rep,name=pipeline,proto3" json:"pipeline,omitempty"`  // next DataNodes to forward to
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *StoreBlockRequest) Reset() {
 	*x = StoreBlockRequest{}
-	mi := &file_proto_minihadoop_proto_msgTypes[5]
+	mi := &file_proto_minihadoop_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -356,7 +672,7 @@ func (x *StoreBlockRequest) String() string {
 func (*StoreBlockRequest) ProtoMessage() {}
 
 func (x *StoreBlockRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[5]
+	mi := &file_proto_minihadoop_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -369,7 +685,7 @@ func (x *StoreBlockRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StoreBlockRequest.ProtoReflect.Descriptor instead.
 func (*StoreBlockRequest) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{5}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *StoreBlockRequest) GetBlockId() string {
@@ -409,7 +725,7 @@ type StoreBlockResponse struct {
 
 func (x *StoreBlockResponse) Reset() {
 	*x = StoreBlockResponse{}
-	mi := &file_proto_minihadoop_proto_msgTypes[6]
+	mi := &file_proto_minihadoop_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -421,7 +737,7 @@ func (x *StoreBlockResponse) String() string {
 func (*StoreBlockResponse) ProtoMessage() {}
 
 func (x *StoreBlockResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[6]
+	mi := &file_proto_minihadoop_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -434,7 +750,7 @@ func (x *StoreBlockResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StoreBlockResponse.ProtoReflect.Descriptor instead.
 func (*StoreBlockResponse) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{6}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *StoreBlockResponse) GetOk() bool {
@@ -453,7 +769,7 @@ type ReadBlockRequest struct {
 
 func (x *ReadBlockRequest) Reset() {
 	*x = ReadBlockRequest{}
-	mi := &file_proto_minihadoop_proto_msgTypes[7]
+	mi := &file_proto_minihadoop_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -465,7 +781,7 @@ func (x *ReadBlockRequest) String() string {
 func (*ReadBlockRequest) ProtoMessage() {}
 
 func (x *ReadBlockRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[7]
+	mi := &file_proto_minihadoop_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -478,7 +794,7 @@ func (x *ReadBlockRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReadBlockRequest.ProtoReflect.Descriptor instead.
 func (*ReadBlockRequest) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{7}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ReadBlockRequest) GetBlockId() string {
@@ -498,7 +814,7 @@ type ReadBlockResponse struct {
 
 func (x *ReadBlockResponse) Reset() {
 	*x = ReadBlockResponse{}
-	mi := &file_proto_minihadoop_proto_msgTypes[8]
+	mi := &file_proto_minihadoop_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -510,7 +826,7 @@ func (x *ReadBlockResponse) String() string {
 func (*ReadBlockResponse) ProtoMessage() {}
 
 func (x *ReadBlockResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[8]
+	mi := &file_proto_minihadoop_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -523,7 +839,7 @@ func (x *ReadBlockResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReadBlockResponse.ProtoReflect.Descriptor instead.
 func (*ReadBlockResponse) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{8}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ReadBlockResponse) GetData() []byte {
@@ -550,7 +866,7 @@ type ReplicateBlockRequest struct {
 
 func (x *ReplicateBlockRequest) Reset() {
 	*x = ReplicateBlockRequest{}
-	mi := &file_proto_minihadoop_proto_msgTypes[9]
+	mi := &file_proto_minihadoop_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -562,7 +878,7 @@ func (x *ReplicateBlockRequest) String() string {
 func (*ReplicateBlockRequest) ProtoMessage() {}
 
 func (x *ReplicateBlockRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[9]
+	mi := &file_proto_minihadoop_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -575,7 +891,7 @@ func (x *ReplicateBlockRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReplicateBlockRequest.ProtoReflect.Descriptor instead.
 func (*ReplicateBlockRequest) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{9}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ReplicateBlockRequest) GetBlockId() string {
@@ -601,7 +917,7 @@ type ReplicateBlockResponse struct {
 
 func (x *ReplicateBlockResponse) Reset() {
 	*x = ReplicateBlockResponse{}
-	mi := &file_proto_minihadoop_proto_msgTypes[10]
+	mi := &file_proto_minihadoop_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -613,7 +929,7 @@ func (x *ReplicateBlockResponse) String() string {
 func (*ReplicateBlockResponse) ProtoMessage() {}
 
 func (x *ReplicateBlockResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[10]
+	mi := &file_proto_minihadoop_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -626,7 +942,7 @@ func (x *ReplicateBlockResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReplicateBlockResponse.ProtoReflect.Descriptor instead.
 func (*ReplicateBlockResponse) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{10}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ReplicateBlockResponse) GetOk() bool {
@@ -648,7 +964,7 @@ type RunTaskRequest struct {
 
 func (x *RunTaskRequest) Reset() {
 	*x = RunTaskRequest{}
-	mi := &file_proto_minihadoop_proto_msgTypes[11]
+	mi := &file_proto_minihadoop_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -660,7 +976,7 @@ func (x *RunTaskRequest) String() string {
 func (*RunTaskRequest) ProtoMessage() {}
 
 func (x *RunTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[11]
+	mi := &file_proto_minihadoop_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -673,7 +989,7 @@ func (x *RunTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunTaskRequest.ProtoReflect.Descriptor instead.
 func (*RunTaskRequest) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{11}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *RunTaskRequest) GetJobId() string {
@@ -713,7 +1029,7 @@ type RunTaskResponse struct {
 
 func (x *RunTaskResponse) Reset() {
 	*x = RunTaskResponse{}
-	mi := &file_proto_minihadoop_proto_msgTypes[12]
+	mi := &file_proto_minihadoop_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -725,7 +1041,7 @@ func (x *RunTaskResponse) String() string {
 func (*RunTaskResponse) ProtoMessage() {}
 
 func (x *RunTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_minihadoop_proto_msgTypes[12]
+	mi := &file_proto_minihadoop_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -738,7 +1054,7 @@ func (x *RunTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunTaskResponse.ProtoReflect.Descriptor instead.
 func (*RunTaskResponse) Descriptor() ([]byte, []int) {
-	return file_proto_minihadoop_proto_rawDescGZIP(), []int{12}
+	return file_proto_minihadoop_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *RunTaskResponse) GetAccepted() bool {
@@ -770,7 +1086,22 @@ const file_proto_minihadoop_proto_rawDesc = "" +
 	"\aCommand\x12+\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x17.minihadoop.CommandTypeR\x04type\x12\x1b\n" +
 	"\tblock_ids\x18\x02 \x03(\tR\bblockIds\x12%\n" +
-	"\x0etarget_address\x18\x03 \x01(\tR\rtargetAddress\"z\n" +
+	"\x0etarget_address\x18\x03 \x01(\tR\rtargetAddress\"%\n" +
+	"\x0fAddBlockRequest\x12\x12\n" +
+	"\x04file\x18\x01 \x01(\tR\x04file\"K\n" +
+	"\x10AddBlockResponse\x12\x19\n" +
+	"\bblock_id\x18\x01 \x01(\tR\ablockId\x12\x1c\n" +
+	"\taddresses\x18\x02 \x03(\tR\taddresses\")\n" +
+	"\x13CompleteFileRequest\x12\x12\n" +
+	"\x04file\x18\x01 \x01(\tR\x04file\"\x16\n" +
+	"\x14CompleteFileResponse\".\n" +
+	"\x18GetBlockLocationsRequest\x12\x12\n" +
+	"\x04file\x18\x01 \x01(\tR\x04file\"H\n" +
+	"\rBlockLocation\x12\x19\n" +
+	"\bblock_id\x18\x01 \x01(\tR\ablockId\x12\x1c\n" +
+	"\taddresses\x18\x02 \x03(\tR\taddresses\"N\n" +
+	"\x19GetBlockLocationsResponse\x121\n" +
+	"\x06blocks\x18\x01 \x03(\v2\x19.minihadoop.BlockLocationR\x06blocks\"z\n" +
 	"\x11StoreBlockRequest\x12\x19\n" +
 	"\bblock_id\x18\x01 \x01(\tR\ablockId\x12\x12\n" +
 	"\x04data\x18\x02 \x01(\fR\x04data\x12\x1a\n" +
@@ -798,10 +1129,13 @@ const file_proto_minihadoop_proto_rawDesc = "" +
 	"\vCommandType\x12\x17\n" +
 	"\x13COMMAND_UNSPECIFIED\x10\x00\x12\x11\n" +
 	"\rDELETE_BLOCKS\x10\x01\x12\x13\n" +
-	"\x0fREPLICATE_BLOCK\x10\x022\x9b\x01\n" +
+	"\x0fREPLICATE_BLOCK\x10\x022\x97\x03\n" +
 	"\bNameNode\x12E\n" +
 	"\bRegister\x12\x1b.minihadoop.RegisterRequest\x1a\x1c.minihadoop.RegisterResponse\x12H\n" +
-	"\tHeartbeat\x12\x1c.minihadoop.HeartbeatRequest\x1a\x1d.minihadoop.HeartbeatResponse2\xbe\x02\n" +
+	"\tHeartbeat\x12\x1c.minihadoop.HeartbeatRequest\x1a\x1d.minihadoop.HeartbeatResponse\x12E\n" +
+	"\bAddBlock\x12\x1b.minihadoop.AddBlockRequest\x1a\x1c.minihadoop.AddBlockResponse\x12Q\n" +
+	"\fCompleteFile\x12\x1f.minihadoop.CompleteFileRequest\x1a .minihadoop.CompleteFileResponse\x12`\n" +
+	"\x11GetBlockLocations\x12$.minihadoop.GetBlockLocationsRequest\x1a%.minihadoop.GetBlockLocationsResponse2\xbe\x02\n" +
 	"\bDataNode\x12K\n" +
 	"\n" +
 	"StoreBlock\x12\x1d.minihadoop.StoreBlockRequest\x1a\x1e.minihadoop.StoreBlockResponse\x12H\n" +
@@ -822,43 +1156,57 @@ func file_proto_minihadoop_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_minihadoop_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_minihadoop_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_proto_minihadoop_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_proto_minihadoop_proto_goTypes = []any{
-	(CommandType)(0),               // 0: minihadoop.CommandType
-	(*RegisterRequest)(nil),        // 1: minihadoop.RegisterRequest
-	(*RegisterResponse)(nil),       // 2: minihadoop.RegisterResponse
-	(*HeartbeatRequest)(nil),       // 3: minihadoop.HeartbeatRequest
-	(*HeartbeatResponse)(nil),      // 4: minihadoop.HeartbeatResponse
-	(*Command)(nil),                // 5: minihadoop.Command
-	(*StoreBlockRequest)(nil),      // 6: minihadoop.StoreBlockRequest
-	(*StoreBlockResponse)(nil),     // 7: minihadoop.StoreBlockResponse
-	(*ReadBlockRequest)(nil),       // 8: minihadoop.ReadBlockRequest
-	(*ReadBlockResponse)(nil),      // 9: minihadoop.ReadBlockResponse
-	(*ReplicateBlockRequest)(nil),  // 10: minihadoop.ReplicateBlockRequest
-	(*ReplicateBlockResponse)(nil), // 11: minihadoop.ReplicateBlockResponse
-	(*RunTaskRequest)(nil),         // 12: minihadoop.RunTaskRequest
-	(*RunTaskResponse)(nil),        // 13: minihadoop.RunTaskResponse
+	(CommandType)(0),                  // 0: minihadoop.CommandType
+	(*RegisterRequest)(nil),           // 1: minihadoop.RegisterRequest
+	(*RegisterResponse)(nil),          // 2: minihadoop.RegisterResponse
+	(*HeartbeatRequest)(nil),          // 3: minihadoop.HeartbeatRequest
+	(*HeartbeatResponse)(nil),         // 4: minihadoop.HeartbeatResponse
+	(*Command)(nil),                   // 5: minihadoop.Command
+	(*AddBlockRequest)(nil),           // 6: minihadoop.AddBlockRequest
+	(*AddBlockResponse)(nil),          // 7: minihadoop.AddBlockResponse
+	(*CompleteFileRequest)(nil),       // 8: minihadoop.CompleteFileRequest
+	(*CompleteFileResponse)(nil),      // 9: minihadoop.CompleteFileResponse
+	(*GetBlockLocationsRequest)(nil),  // 10: minihadoop.GetBlockLocationsRequest
+	(*BlockLocation)(nil),             // 11: minihadoop.BlockLocation
+	(*GetBlockLocationsResponse)(nil), // 12: minihadoop.GetBlockLocationsResponse
+	(*StoreBlockRequest)(nil),         // 13: minihadoop.StoreBlockRequest
+	(*StoreBlockResponse)(nil),        // 14: minihadoop.StoreBlockResponse
+	(*ReadBlockRequest)(nil),          // 15: minihadoop.ReadBlockRequest
+	(*ReadBlockResponse)(nil),         // 16: minihadoop.ReadBlockResponse
+	(*ReplicateBlockRequest)(nil),     // 17: minihadoop.ReplicateBlockRequest
+	(*ReplicateBlockResponse)(nil),    // 18: minihadoop.ReplicateBlockResponse
+	(*RunTaskRequest)(nil),            // 19: minihadoop.RunTaskRequest
+	(*RunTaskResponse)(nil),           // 20: minihadoop.RunTaskResponse
 }
 var file_proto_minihadoop_proto_depIdxs = []int32{
 	5,  // 0: minihadoop.HeartbeatResponse.commands:type_name -> minihadoop.Command
 	0,  // 1: minihadoop.Command.type:type_name -> minihadoop.CommandType
-	1,  // 2: minihadoop.NameNode.Register:input_type -> minihadoop.RegisterRequest
-	3,  // 3: minihadoop.NameNode.Heartbeat:input_type -> minihadoop.HeartbeatRequest
-	6,  // 4: minihadoop.DataNode.StoreBlock:input_type -> minihadoop.StoreBlockRequest
-	8,  // 5: minihadoop.DataNode.ReadBlock:input_type -> minihadoop.ReadBlockRequest
-	10, // 6: minihadoop.DataNode.ReplicateBlock:input_type -> minihadoop.ReplicateBlockRequest
-	12, // 7: minihadoop.DataNode.RunTask:input_type -> minihadoop.RunTaskRequest
-	2,  // 8: minihadoop.NameNode.Register:output_type -> minihadoop.RegisterResponse
-	4,  // 9: minihadoop.NameNode.Heartbeat:output_type -> minihadoop.HeartbeatResponse
-	7,  // 10: minihadoop.DataNode.StoreBlock:output_type -> minihadoop.StoreBlockResponse
-	9,  // 11: minihadoop.DataNode.ReadBlock:output_type -> minihadoop.ReadBlockResponse
-	11, // 12: minihadoop.DataNode.ReplicateBlock:output_type -> minihadoop.ReplicateBlockResponse
-	13, // 13: minihadoop.DataNode.RunTask:output_type -> minihadoop.RunTaskResponse
-	8,  // [8:14] is the sub-list for method output_type
-	2,  // [2:8] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	11, // 2: minihadoop.GetBlockLocationsResponse.blocks:type_name -> minihadoop.BlockLocation
+	1,  // 3: minihadoop.NameNode.Register:input_type -> minihadoop.RegisterRequest
+	3,  // 4: minihadoop.NameNode.Heartbeat:input_type -> minihadoop.HeartbeatRequest
+	6,  // 5: minihadoop.NameNode.AddBlock:input_type -> minihadoop.AddBlockRequest
+	8,  // 6: minihadoop.NameNode.CompleteFile:input_type -> minihadoop.CompleteFileRequest
+	10, // 7: minihadoop.NameNode.GetBlockLocations:input_type -> minihadoop.GetBlockLocationsRequest
+	13, // 8: minihadoop.DataNode.StoreBlock:input_type -> minihadoop.StoreBlockRequest
+	15, // 9: minihadoop.DataNode.ReadBlock:input_type -> minihadoop.ReadBlockRequest
+	17, // 10: minihadoop.DataNode.ReplicateBlock:input_type -> minihadoop.ReplicateBlockRequest
+	19, // 11: minihadoop.DataNode.RunTask:input_type -> minihadoop.RunTaskRequest
+	2,  // 12: minihadoop.NameNode.Register:output_type -> minihadoop.RegisterResponse
+	4,  // 13: minihadoop.NameNode.Heartbeat:output_type -> minihadoop.HeartbeatResponse
+	7,  // 14: minihadoop.NameNode.AddBlock:output_type -> minihadoop.AddBlockResponse
+	9,  // 15: minihadoop.NameNode.CompleteFile:output_type -> minihadoop.CompleteFileResponse
+	12, // 16: minihadoop.NameNode.GetBlockLocations:output_type -> minihadoop.GetBlockLocationsResponse
+	14, // 17: minihadoop.DataNode.StoreBlock:output_type -> minihadoop.StoreBlockResponse
+	16, // 18: minihadoop.DataNode.ReadBlock:output_type -> minihadoop.ReadBlockResponse
+	18, // 19: minihadoop.DataNode.ReplicateBlock:output_type -> minihadoop.ReplicateBlockResponse
+	20, // 20: minihadoop.DataNode.RunTask:output_type -> minihadoop.RunTaskResponse
+	12, // [12:21] is the sub-list for method output_type
+	3,  // [3:12] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_proto_minihadoop_proto_init() }
@@ -872,7 +1220,7 @@ func file_proto_minihadoop_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_minihadoop_proto_rawDesc), len(file_proto_minihadoop_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   13,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

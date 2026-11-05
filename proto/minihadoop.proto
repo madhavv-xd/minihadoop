@@ -8,6 +8,11 @@ option go_package = "github.com/madhavv-xd/minihadoop/proto;proto";
 service NameNode{
     rpc Register(RegisterRequest) returns (RegisterResponse);
     rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+
+    //now step 2 which is the storage layer 
+    rpc AddBlock(AddBlockRequest) returns (AddBlockResponse);
+    rpc CompleteFile(CompleteFileRequest) returns (CompleteFileResponse);
+    rpc GetBlockLocations(GetBlockLocationsRequest) returns (GetBlockLocationsResponse);
 } //generator turns this into a golang interface 
 
 //register messages 
@@ -43,6 +48,33 @@ message Command {
   string target_address = 3;
 }
 
+// ---- NameNode messages ----
+
+message AddBlockRequest {
+  string file = 1;
+}
+message AddBlockResponse {
+  string block_id = 1;
+  repeated string addresses = 2; // first = node to write to, rest = pipeline
+}
+
+message CompleteFileRequest {
+  string file = 1;
+}
+message CompleteFileResponse {}
+
+message GetBlockLocationsRequest {
+  string file = 1;
+}
+message BlockLocation {
+  string block_id = 1;
+  repeated string addresses = 2; // every node holding this block
+}
+message GetBlockLocationsResponse {
+  repeated BlockLocation blocks = 1; // in file order
+}
+
+
 service DataNode {
   rpc StoreBlock(StoreBlockRequest) returns (StoreBlockResponse);
   rpc ReadBlock(ReadBlockRequest) returns (ReadBlockResponse);
@@ -53,8 +85,8 @@ service DataNode {
 message StoreBlockRequest {
   string block_id = 1;
   bytes data = 2;
-  uint32 checksum = 3;              // CRC32 of data
-  repeated string pipeline = 4;     // next DataNodes to forward to (write pipeline)
+  uint32 checksum = 3;          // CRC32 of data
+  repeated string pipeline = 4; // next DataNodes to forward to
 }
 
 message StoreBlockResponse {
@@ -83,7 +115,7 @@ message RunTaskRequest {
   string job_id = 1;
   string task_id = 2;
   string block_id = 3;
-  string task_type = 4;   // e.g. "embed"
+  string task_type = 4; // e.g. "embed"
 }
 
 message RunTaskResponse {

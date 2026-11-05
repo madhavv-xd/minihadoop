@@ -19,8 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NameNode_Register_FullMethodName  = "/minihadoop.NameNode/Register"
-	NameNode_Heartbeat_FullMethodName = "/minihadoop.NameNode/Heartbeat"
+	NameNode_Register_FullMethodName          = "/minihadoop.NameNode/Register"
+	NameNode_Heartbeat_FullMethodName         = "/minihadoop.NameNode/Heartbeat"
+	NameNode_AddBlock_FullMethodName          = "/minihadoop.NameNode/AddBlock"
+	NameNode_CompleteFile_FullMethodName      = "/minihadoop.NameNode/CompleteFile"
+	NameNode_GetBlockLocations_FullMethodName = "/minihadoop.NameNode/GetBlockLocations"
 )
 
 // NameNodeClient is the client API for NameNode service.
@@ -31,6 +34,10 @@ const (
 type NameNodeClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Heartbeat(ctx context.Context, in *HeartbeatRequest, opts ...grpc.CallOption) (*HeartbeatResponse, error)
+	// now step 2 which is the storage layer
+	AddBlock(ctx context.Context, in *AddBlockRequest, opts ...grpc.CallOption) (*AddBlockResponse, error)
+	CompleteFile(ctx context.Context, in *CompleteFileRequest, opts ...grpc.CallOption) (*CompleteFileResponse, error)
+	GetBlockLocations(ctx context.Context, in *GetBlockLocationsRequest, opts ...grpc.CallOption) (*GetBlockLocationsResponse, error)
 }
 
 type nameNodeClient struct {
@@ -61,6 +68,36 @@ func (c *nameNodeClient) Heartbeat(ctx context.Context, in *HeartbeatRequest, op
 	return out, nil
 }
 
+func (c *nameNodeClient) AddBlock(ctx context.Context, in *AddBlockRequest, opts ...grpc.CallOption) (*AddBlockResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddBlockResponse)
+	err := c.cc.Invoke(ctx, NameNode_AddBlock_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nameNodeClient) CompleteFile(ctx context.Context, in *CompleteFileRequest, opts ...grpc.CallOption) (*CompleteFileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompleteFileResponse)
+	err := c.cc.Invoke(ctx, NameNode_CompleteFile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nameNodeClient) GetBlockLocations(ctx context.Context, in *GetBlockLocationsRequest, opts ...grpc.CallOption) (*GetBlockLocationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBlockLocationsResponse)
+	err := c.cc.Invoke(ctx, NameNode_GetBlockLocations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NameNodeServer is the server API for NameNode service.
 // All implementations must embed UnimplementedNameNodeServer
 // for forward compatibility.
@@ -69,6 +106,10 @@ func (c *nameNodeClient) Heartbeat(ctx context.Context, in *HeartbeatRequest, op
 type NameNodeServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Heartbeat(context.Context, *HeartbeatRequest) (*HeartbeatResponse, error)
+	// now step 2 which is the storage layer
+	AddBlock(context.Context, *AddBlockRequest) (*AddBlockResponse, error)
+	CompleteFile(context.Context, *CompleteFileRequest) (*CompleteFileResponse, error)
+	GetBlockLocations(context.Context, *GetBlockLocationsRequest) (*GetBlockLocationsResponse, error)
 	mustEmbedUnimplementedNameNodeServer()
 }
 
@@ -84,6 +125,15 @@ func (UnimplementedNameNodeServer) Register(context.Context, *RegisterRequest) (
 }
 func (UnimplementedNameNodeServer) Heartbeat(context.Context, *HeartbeatRequest) (*HeartbeatResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Heartbeat not implemented")
+}
+func (UnimplementedNameNodeServer) AddBlock(context.Context, *AddBlockRequest) (*AddBlockResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AddBlock not implemented")
+}
+func (UnimplementedNameNodeServer) CompleteFile(context.Context, *CompleteFileRequest) (*CompleteFileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CompleteFile not implemented")
+}
+func (UnimplementedNameNodeServer) GetBlockLocations(context.Context, *GetBlockLocationsRequest) (*GetBlockLocationsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetBlockLocations not implemented")
 }
 func (UnimplementedNameNodeServer) mustEmbedUnimplementedNameNodeServer() {}
 func (UnimplementedNameNodeServer) testEmbeddedByValue()                  {}
@@ -142,6 +192,60 @@ func _NameNode_Heartbeat_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NameNode_AddBlock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddBlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NameNodeServer).AddBlock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NameNode_AddBlock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NameNodeServer).AddBlock(ctx, req.(*AddBlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NameNode_CompleteFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompleteFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NameNodeServer).CompleteFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NameNode_CompleteFile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NameNodeServer).CompleteFile(ctx, req.(*CompleteFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NameNode_GetBlockLocations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBlockLocationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NameNodeServer).GetBlockLocations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NameNode_GetBlockLocations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NameNodeServer).GetBlockLocations(ctx, req.(*GetBlockLocationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NameNode_ServiceDesc is the grpc.ServiceDesc for NameNode service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -156,6 +260,18 @@ var NameNode_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Heartbeat",
 			Handler:    _NameNode_Heartbeat_Handler,
+		},
+		{
+			MethodName: "AddBlock",
+			Handler:    _NameNode_AddBlock_Handler,
+		},
+		{
+			MethodName: "CompleteFile",
+			Handler:    _NameNode_CompleteFile_Handler,
+		},
+		{
+			MethodName: "GetBlockLocations",
+			Handler:    _NameNode_GetBlockLocations_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
