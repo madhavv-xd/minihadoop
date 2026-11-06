@@ -85,3 +85,36 @@ func (d *DataNode) Run(){
 	log.Printf("heartbeat ok (%s)" , d.nodeID)
 	}
 }
+
+//namenode tells us to copy one of our blocks to another datanode
+// ReplicateBlock: NameNode tells us to copy one of our blocks to another DataNode.
+func (d *DataNode) ReplicateBlock(ctx context.Context, req *pb.ReplicateBlockRequest) (*pb.ReplicateBlockResponse, error) {
+	// read the block from our own disk (checksum verified inside ReadBlock)
+	rresp, err := d.ReadBlock(ctx, &pb.ReadBlockRequest{BlockId: req.BlockId})
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "read %s: %v", req.BlockId, err)
+	}
+
+	// connect to the target DataNode
+	conn, err := grpc.NewClient(req.TargetAddress,
+		grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		return nil, status.Errorf(codes.Unavailable, "dial %s: %v", req.TargetAddress, err)
+	}
+	defer conn.Close()
+
+	// send it with the normal StoreBlock RPC (no pipeline: just this one target)
+	cctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+	_, err = pb.NewDataNodeClient(conn).StoreBlock(cctx, &pb.StoreBlockRequest{
+		BlockId:  req.BlockId,
+		Data:     rresp.Data,
+		Checksum: rresp.Checksum,
+	})
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "store on %s: %v", req.TargetAddress, err)
+	}
+
+	log.Printf("replicated %s -> %s", req.BlockId, req.TargetAddress)
+	return &pb.ReplicateBlockResponse{Ok: true}, nil
+}

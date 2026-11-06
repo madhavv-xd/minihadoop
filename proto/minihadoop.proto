@@ -82,6 +82,7 @@ service DataNode {
   rpc RunTask(RunTaskRequest) returns (RunTaskResponse);
 }
 
+
 message StoreBlockRequest {
   string block_id = 1;
   bytes data = 2;

@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"time"
+	"os"
 	"github.com/madhavv-xd/minihadoop/internal/namenode"
 	pb "github.com/madhavv-xd/minihadoop/proto"
 	"google.golang.org/grpc" //pb is grpc related imports
@@ -15,7 +16,16 @@ func main() {
 		log.Fatalf("listen: %v" , err)
 	}
 
-	nn := namenode.NewServer()
+
+	walPath := os.Getenv("EDITLOG_PATH")
+	if walPath == "" {
+		walPath = "/meta/editlog.jsonl"
+	}
+	nn, err := namenode.NewServer(walPath)
+	if err != nil {
+		log.Fatalf("namenode: %v", err)
+	}
+	go nn.Monitor(10*time.Second) // runs a goroutine background 
 	grpcServer := grpc.NewServer()
 	pb.RegisterNameNodeServer(grpcServer , nn)
 

@@ -3,6 +3,8 @@ services:
     build: .
     command: namenode
     ports: ["9000:9000"]
+    volumes:
+      - nn-meta:/meta
 
   datanode1:
     build: .
@@ -65,6 +67,7 @@ services:
     volumes: ["./testdata:/files"]
     profiles: ["tools"]
 volumes:
+  nn-meta: 
   dn1-data:
   dn2-data:
   dn3-data:
